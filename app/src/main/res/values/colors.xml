@@ -5,5 +5,6 @@
     <color name="colorAccent">#FF4081</color>
     <color name="dark">#475291</color>
     <color name="light">#d8deff</color>
-    <color name="selected_light">#d8fdff</color>
+    <color name="selected_light">#FF4081</color>
+    <color name="buttonColor">#afbaff</color>
 </resources>
