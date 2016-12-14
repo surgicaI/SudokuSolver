@@ -5,8 +5,12 @@ package com.cool_app.sudukosolver.sudokusolver;
  */
 
 public class Sudoku {
-    public void solveSudoku(char[][] board) {
-        solve(board);
+    public boolean solveSudoku(char[][] board) {
+        if(isValid(board)) {
+            solve(board);
+            return true;
+        }
+        return false;
     }
 
     private boolean solve(char[][] board){

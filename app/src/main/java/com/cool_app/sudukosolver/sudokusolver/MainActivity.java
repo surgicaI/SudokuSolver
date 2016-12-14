@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -21,13 +22,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        initOnCreateListeners();
+        initOnClickListeners();
         initSudokuGridButtons();
         setListeners();
         sudoku = new Sudoku();
     }
 
-    private void initOnCreateListeners(){
+    private void initOnClickListeners(){
         sudokuGridListener = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -51,6 +52,9 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case R.id.button_solve:
                         solveSuduko();
+                        break;
+                    case R.id.button_reset:
+                        resetGrid();
                         break;
                     default:
                         if(currentSelectedGridBox!=null){
@@ -162,7 +166,6 @@ public class MainActivity extends AppCompatActivity {
             button.setOnClickListener(sudokuGridListener);
         }
 
-        findViewById(R.id.button_0).setOnClickListener(numPadListener);
         findViewById(R.id.button_1).setOnClickListener(numPadListener);
         findViewById(R.id.button_2).setOnClickListener(numPadListener);
         findViewById(R.id.button_3).setOnClickListener(numPadListener);
@@ -174,17 +177,23 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.button_9).setOnClickListener(numPadListener);
         findViewById(R.id.button_solve).setOnClickListener(numPadListener);
         findViewById(R.id.button_clear).setOnClickListener(numPadListener);
+        findViewById(R.id.button_reset).setOnClickListener(numPadListener);
     }
 
     private void resetGrid(){
-        //reset the grid
+        for(Button button : gridButtons){
+            button.setText("");
+        }
     }
 
     private void solveSuduko(){
         char[][] board = new char[9][9];
         createBoardFromGrid(board);
-        sudoku.solveSudoku(board);
-        createGridFromBoard(board);
+        if(sudoku.solveSudoku(board)) {
+            createGridFromBoard(board);
+        }else{
+            Toast.makeText(this,"Invalid input",Toast.LENGTH_LONG).show();
+        }
     }
 
     private void createBoardFromGrid(char[][] board){
